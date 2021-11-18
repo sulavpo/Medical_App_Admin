@@ -3,11 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:medi_tect_admin/constants/styles.dart';
 import 'package:medi_tect_admin/widgets/custom_appbar.dart';
+import 'package:medi_tect_admin/widgets/custom_drawer.dart';
 import 'package:medi_tect_admin/widgets/custom_text.dart';
 
 class RegisterScreen extends StatelessWidget {
-  const RegisterScreen({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     String _email = "";
@@ -23,7 +22,7 @@ class RegisterScreen extends StatelessWidget {
         await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: _email, password: _password)
             .then((value) => FirebaseFirestore.instance
-                    .collection("doctor")
+                    .collection("user")
                     .doc(value.user!.uid)
                     .set({
                   "fullName": _fullName,
@@ -40,7 +39,7 @@ class RegisterScreen extends StatelessWidget {
                   "registeredDate": _registerDate,
                   "joinedDate": DateTime.now()
                 }));
-        Navigator.pushNamed(context, "/landing");
+        Navigator.pushNamed(context, "/login");
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
           print('The password provided is too weak.');
@@ -54,6 +53,7 @@ class RegisterScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: myAppBar("Register"),
+      drawer: MyDrawer(),
       body: ListView(
         children: [
           Center(

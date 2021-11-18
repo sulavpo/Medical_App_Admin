@@ -18,9 +18,6 @@ import 'package:medi_tect_admin/screen/login_screen.dart';
 import 'package:medi_tect_admin/screen/register_patient.dart';
 import 'package:medi_tect_admin/screen/register_screen.dart';
 import 'package:medi_tect_admin/screen/settings.dart';
-import 'package:medi_tect_admin/screen/test_landingScreen.dart';
-import 'package:medi_tect_admin/screen/test_loginScreen.dart';
-import 'package:medi_tect_admin/screen/test_registration.dart';
 import 'package:medi_tect_admin/screen/vaccine.dart';
 
 void main() {
@@ -58,9 +55,6 @@ class MyApp extends StatelessWidget {
           MyRoutes.hospitalScreen: (context) => HospitalScreen(),
           MyRoutes.addHospital: (context) => AddHospital(),
           MyRoutes.appointment: (context) => AppointmentScreen(),
-          MyRoutes.testLanding: (context) => TestLanding(),
-          MyRoutes.testLogin: (context) => TestLogin(),
-          MyRoutes.testRegister: (context) => TestRegistration(),
         });
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:medi_tect_admin/widgets/custom_appbar.dart';
+import 'package:medi_tect_admin/widgets/custom_drawer.dart';
 
 class BedScreen extends StatelessWidget {
   const BedScreen({Key? key}) : super(key: key);
@@ -9,6 +10,7 @@ class BedScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: myAppBar("Beds"),
+      drawer: MyDrawer(),
       body: ListView.builder(
           itemCount: 30,
           itemBuilder: (context, items) {

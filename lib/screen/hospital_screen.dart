@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
-import 'package:medi_tect_admin/screen/book_hospital_screen.dart';
+import 'package:medi_tect_admin/screen/book_beds_screen.dart';
 import 'package:medi_tect_admin/screen/edit_bed.dart';
 import 'package:medi_tect_admin/widgets/custom_appbar.dart';
 import 'package:medi_tect_admin/widgets/custom_drawer.dart';
@@ -22,28 +22,15 @@ class HospitalScreen extends StatelessWidget {
             appBar: myAppBar("Hospital"),
             drawer: MyDrawer(),
             floatingActionButton: FloatingActionButton(
+              onPressed: ()=> Navigator.pushNamed(context, "/addHospital"),
               child: Icon(CupertinoIcons.add),
-              onPressed: () {
-                Navigator.pushNamed(context, "/addHospital");
-              },
             ),
             body: ListView.builder(
               itemCount: docs.length,
               itemBuilder: (_, i) {
                 final data = docs[i].data();
                 return GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => EditBeds(
-                                  docId: snapshot.data!.docs[i].id,
-                                  wardName: data['wardName'],
-                                  totalBeds: data['totalBeds'],
-                                  availableBeds: data['availableBeds'],
-                                  contact: data['contact'],
-                                )));
-                  },
+                  onTap: ()=> Navigator.of(context).push(MaterialPageRoute(builder: (context)=> EditBeds(docId: snapshot.data!.docs[i].id, wardName: data['wardName'], totalBeds: data['totalBeds'], contact: data['contact'], availableBeds: data['availableBeds']))),
                   child: Container(
                     margin: EdgeInsets.all(16.0),
                     child: Card(
@@ -59,6 +46,7 @@ class HospitalScreen extends StatelessWidget {
                           onPressed: () =>
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => BookHospitalScreen(
+                                        id: snapshot.data!.docs[i].id,
                                         hospitalName: data['wardName'],
                                         hospitalContact: data['contact'],
                                         hospitalRemainingBeds:

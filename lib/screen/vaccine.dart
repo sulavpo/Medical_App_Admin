@@ -3,10 +3,10 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 import 'package:medi_tect_admin/screen/edit_vaccine.dart';
-import 'package:medi_tect_admin/screen/esewa_epay.dart';
+import 'package:medi_tect_admin/screen/vaccine_book.dart';
 import 'package:medi_tect_admin/widgets/custom_appbar.dart';
+import 'package:medi_tect_admin/widgets/custom_drawer.dart';
 
-import 'package:get/get.dart';
 
 // ignore: must_be_immutable
 class VaccineScreen extends StatelessWidget {
@@ -21,6 +21,7 @@ class VaccineScreen extends StatelessWidget {
           final docs = snapshot.data!.docs;
           return Scaffold(
             appBar: myAppBar("Vaccine"),
+            drawer: MyDrawer(),
             body: ListView.builder(
               itemCount: docs.length,
               itemBuilder: (_, i) {
@@ -42,21 +43,26 @@ class VaccineScreen extends StatelessWidget {
                     margin: EdgeInsets.all(16.0),
                     child: Card(
                       child: ListTile(
-                          leading: Image.asset("assets/icons/vaccine.png"),
-                          title: Text(data['name']),
-                          subtitle: Text(
-                            "Total: " + data['total'],
-                          ),
-                          trailing: IconButton(
-                            onPressed: () {
-                              Get.to(() => EsewaEpay());
-                            },
-                            icon: Icon(
-                              Icons.payment,
-                              color: Colors.green,
-                              size: 28.0,
-                            ),
-                          )),
+                        leading: Image.asset("assets/icons/vaccine.png"),
+                        title: Text(data['name']),
+                        subtitle: Text(
+                          "Total: " + data['total'] + "  Dose: " + data['dose'],
+                        ),
+                        trailing: IconButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => VaccineBook(
+                                      vName: data['name'],
+                                      vContact: data['contact'],
+                                      vDose: data['dose'],
+                                      patientName: "Abishek Khanal",
+                                    )));
+                          },
+                          icon: Icon(CupertinoIcons.arrow_right_circle),
+                        ),
+                      ),
                     ),
                   ),
                 );

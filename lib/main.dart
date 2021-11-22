@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:medi_tect_admin/constants/colors.dart';
 import 'package:medi_tect_admin/constants/routes.dart';
 import 'package:medi_tect_admin/screen/addLabTest.dart';
+import 'package:medi_tect_admin/screen/add_carousel_image.dart';
 import 'package:medi_tect_admin/screen/add_hospital.dart';
 import 'package:medi_tect_admin/screen/add_vaccine.dart';
 import 'package:medi_tect_admin/screen/appointment.dart';
@@ -55,6 +56,7 @@ class MyApp extends StatelessWidget {
           MyRoutes.hospitalScreen: (context) => HospitalScreen(),
           MyRoutes.addHospital: (context) => AddHospital(),
           MyRoutes.appointment: (context) => AppointmentScreen(),
+          MyRoutes.addHomeCarouselScreen: (context) => AddHomeCarouselScreen(),
         });
   }
 }

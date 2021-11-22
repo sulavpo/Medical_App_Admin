@@ -186,6 +186,29 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ],
                     ),
+                    Column(
+                      children: [
+                        GestureDetector(
+                          onTap: () =>
+                              Navigator.pushNamed(context, "/addHomeCarousel"),
+                          child: Container(
+                            padding: EdgeInsets.all(8.0),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(40.0),
+                            ),
+                            child: Image.asset("assets/icons/image.png"),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 6.0,
+                        ),
+                        Text(
+                          "Add Images",
+                          style: MyStyles.paragraph,
+                        ),
+                      ],
+                    ),
                     // fifth item
                     Column(
                       children: [

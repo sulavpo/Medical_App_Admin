@@ -12,7 +12,7 @@ class DoctorScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
       stream: FirebaseFirestore.instance
-          .collection('doctor')
+          .collection('user')
           .where('role', isEqualTo: 'doctor')
           .snapshots(),
       builder: (_, snapshot) {

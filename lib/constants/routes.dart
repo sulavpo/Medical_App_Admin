@@ -19,4 +19,5 @@ class MyRoutes {
   static String addHospital = "/addHospital";
   static String bookHospitalScreen = "/bookHospital";
   static String appointment = "/appointment";
+  static String addHomeCarouselScreen = "/addHomeCarousel";
 }

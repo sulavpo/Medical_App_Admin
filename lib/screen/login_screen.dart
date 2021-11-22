@@ -8,8 +8,8 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String _email = "";
-    String _password = "";
+    TextEditingController _emailController = TextEditingController();
+    TextEditingController _passwordController = TextEditingController();
 
     void _dialogBox(String content) {
       showDialog(
@@ -30,8 +30,9 @@ class LoginScreen extends StatelessWidget {
 
     Future<void> _loginUser() async {
       try {
-        await FirebaseAuth.instance
-            .signInWithEmailAndPassword(email: _email, password: _password);
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
+            email: "${_emailController.text}",
+            password: "${_passwordController.text}");
         await Navigator.pushNamed(context, "/landing");
       } on FirebaseAuthException catch (e) {
         if (e.code == 'user-not-found') {
@@ -40,6 +41,8 @@ class LoginScreen extends StatelessWidget {
           return _dialogBox('Wrong password provided for that user.');
         }
       }
+      print("Working");
+      print("${_emailController.text}+${_passwordController.text}");
     }
 
     return Scaffold(
@@ -52,24 +55,21 @@ class LoginScreen extends StatelessWidget {
               margin: EdgeInsets.all(16.0),
               child: Column(
                 children: [
-                  CustomTextField(
-                    helperText: "Email",
-                    hintText: 'Enter email address',
-                    obscureText: false,
-                    onChanged: (value) {
-                      _email = value;
-                    },
+                  Container(
+                    margin: EdgeInsets.all(16.0),
+                    child: TextFormField(
+                      controller: _emailController,
+                      decoration: InputDecoration(
+                        hintText: "Email",
+                      ),
+                    ),
                   ),
-                  SizedBox(
-                    height: 16.0,
-                  ),
-                  CustomTextField(
-                    helperText: "Password",
-                    hintText: 'Enter password',
-                    obscureText: true,
-                    onChanged: (value) {
-                      _password = value;
-                    },
+                  Container(
+                    margin: EdgeInsets.all(16.0),
+                    child: TextFormField(
+                      controller: _passwordController,
+                      decoration: InputDecoration(hintText: "Password"),
+                    ),
                   ),
                   SizedBox(
                     height: 16.0,

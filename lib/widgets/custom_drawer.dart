@@ -1,33 +1,36 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+// import 'package:medi_tect_admin/screen/chatrooms.dart';
 
 class MyDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    _aboutUs(){
-      return showDialog(context: context, builder: (context){
-        return CupertinoAlertDialog(
-          title: Text("About Us"),
-          content: Column(
-            children: [
-              Text("Develop By: Prime College Final Year Student"),
-              Text("v1.0.0")
-            ],
-          ),
-          actions: [
-            Container(
-              margin: EdgeInsets.all(16.0),
-              child: TextButton(
-                onPressed: ()=> Navigator.pop(context),
-                child: Text("Close"),
+    _aboutUs() {
+      return showDialog(
+          context: context,
+          builder: (context) {
+            return CupertinoAlertDialog(
+              title: Text("About Us"),
+              content: Column(
+                children: [
+                  Text("Develop By: Prime College Final Year Student"),
+                  Text("v1.0.0")
+                ],
               ),
-            )
-          ],
-        );
-      });
+              actions: [
+                Container(
+                  margin: EdgeInsets.all(16.0),
+                  child: TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: Text("Close"),
+                  ),
+                )
+              ],
+            );
+          });
     }
+
     return Drawer(
       child: ListView(
         children: [
@@ -60,15 +63,16 @@ class MyDrawer extends StatelessWidget {
             ),
           ),
           // chat
-          drawerItems(
-            context,
-                () => Navigator.pushNamed(context, "/chat"),
-            "Chat",
-            Icon(
-              CupertinoIcons.chat_bubble_2,
-              color: Colors.green,
-            ),
-          ),
+          // drawerItems(
+          //   context,
+          //       () => Navigator.push(
+          //       context, MaterialPageRoute(builder: (context) => ChatRoom())),
+          //   "Chat",
+          //   Icon(
+          //     CupertinoIcons.chat_bubble_2,
+          //     color: Colors.green,
+          //   ),
+          // ),
           // dashboard
           drawerItems(
             context,
@@ -107,8 +111,8 @@ class MyDrawer extends StatelessWidget {
   }
 }
 
-Widget drawerItems(BuildContext context, VoidCallback onTap, String title,
-    Icon icon) {
+Widget drawerItems(
+    BuildContext context, VoidCallback onTap, String title, Icon icon) {
   return ListTile(
     onTap: onTap,
     title: Text(title),

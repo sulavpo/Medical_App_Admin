@@ -5,24 +5,24 @@ import 'package:medi_tect_admin/widgets/custom_appbar.dart';
 import 'package:medi_tect_admin/widgets/custom_drawer.dart';
 
 class DoctorProfileScreen extends StatefulWidget {
+  final String docId;
   final String fullName;
   final String email;
-  final String likes;
-  final String rating;
+  final int rating;
   final String address;
   final String contact;
   final String licensesNumber;
   final String description;
 
   DoctorProfileScreen(
-      {required this.fullName,
-      required this.email,
-      required this.likes,
-      required this.rating,
-      required this.address,
-      required this.contact,
-      required this.licensesNumber,
-      required this.description});
+      {required this.docId,
+        required this.fullName,
+        required this.email,
+        required this.rating,
+        required this.address,
+        required this.contact,
+        required this.licensesNumber,
+        required this.description});
 
   @override
   State<DoctorProfileScreen> createState() => _DoctorProfileScreenState();
@@ -101,9 +101,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                         SizedBox(
                           width: 16.0,
                         ),
-                        Text(
-                          "${widget.rating}" == "" ? "0" : widget.rating,
-                        ),
+                        Text("${widget.rating}"),
                       ],
                     ),
                   ],
@@ -229,7 +227,6 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                 ],
               ),
             ),
-
             Container(
               width: MediaQuery.of(context).size.width,
               margin: EdgeInsets.all(16.0),
@@ -239,6 +236,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => BookAppointment(
+                        docId: widget.docId,
                         doctorName: widget.fullName,
                         doctorAddress: widget.address,
                         doctorContact: widget.contact,
@@ -249,6 +247,20 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                 child: Text("Make an Appointment"),
               ),
             ),
+            // Container(
+            //   width: MediaQuery.of(context).size.width,
+            //   child: TextButton(
+            //     onPressed: () {
+            //       Navigator.push(
+            //         context,
+            //         MaterialPageRoute(
+            //           builder: (context) => FeedBackScreen(docID: widget.docId),
+            //         ),
+            //       );
+            //     },
+            //     child: Text("Feedback"),
+            //   ),
+            // ),
           ],
         ),
       ),

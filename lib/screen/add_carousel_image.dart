@@ -94,7 +94,7 @@ class _AddHomeCarouselScreenState extends State<AddHomeCarouselScreen> {
                 ),
                 borderRadius: BorderRadius.circular(30.0)),
             child: Center(
-              child: FlatButton(
+              child: ElevatedButton(
                 onPressed: () => uploadImageToFirebase(context),
                 child: Text(
                   "Upload Image",

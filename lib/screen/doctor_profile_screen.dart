@@ -8,7 +8,7 @@ class DoctorProfileScreen extends StatefulWidget {
   final String docId;
   final String fullName;
   final String email;
-  final int rating;
+  final double rating;
   final String address;
   final String contact;
   final String licensesNumber;
@@ -62,19 +62,6 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                         height: 4.0,
                       ),
                       Text(widget.email),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          print("Like");
-                        },
-                        icon: Icon(CupertinoIcons.heart),
-                      ),
-                      SizedBox(
-                        height: 4.0,
-                      ),
                     ],
                   ),
                 ],
@@ -247,20 +234,6 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                 child: Text("Make an Appointment"),
               ),
             ),
-            // Container(
-            //   width: MediaQuery.of(context).size.width,
-            //   child: TextButton(
-            //     onPressed: () {
-            //       Navigator.push(
-            //         context,
-            //         MaterialPageRoute(
-            //           builder: (context) => FeedBackScreen(docID: widget.docId),
-            //         ),
-            //       );
-            //     },
-            //     child: Text("Feedback"),
-            //   ),
-            // ),
           ],
         ),
       ),

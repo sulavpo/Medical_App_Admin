@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:medi_tect_admin/constants/colors.dart';
 import 'package:medi_tect_admin/constants/routes.dart';
@@ -23,6 +24,7 @@ import 'package:medi_tect_admin/screen/vaccine.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  Firebase.initializeApp();
   runApp(MyApp());
 }
 

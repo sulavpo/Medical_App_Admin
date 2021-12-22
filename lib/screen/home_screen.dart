@@ -1,10 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:medi_tect_admin/constants/styles.dart';
 import 'package:medi_tect_admin/widgets/custom_appbar.dart';
 import 'package:medi_tect_admin/widgets/custom_carousel.dart';
 import 'package:medi_tect_admin/widgets/custom_drawer.dart';
-import 'package:medi_tect_admin/widgets/doctor_carousel.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -23,43 +23,7 @@ class HomeScreen extends StatelessWidget {
                 margin: EdgeInsets.all(16.0),
                 child: SizedBox(
                   height: 200,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: [
-                      CustomCarousel(
-                        imageName: "doctor1.jpg",
-                        imageDescription: "First Image",
-                      ),
-                      SizedBox(
-                        width: 8.0,
-                      ),
-                      CustomCarousel(
-                        imageName: "doctor2.jpg",
-                        imageDescription: "First Image",
-                      ),
-                      SizedBox(
-                        width: 8.0,
-                      ),
-                      CustomCarousel(
-                        imageName: "doctor3.jpg",
-                        imageDescription: "First Image",
-                      ),
-                      SizedBox(
-                        width: 8.0,
-                      ),
-                      CustomCarousel(
-                        imageName: "doctor1.jpg",
-                        imageDescription: "First Image",
-                      ),
-                      SizedBox(
-                        width: 8.0,
-                      ),
-                      CustomCarousel(
-                        imageName: "doctor2.jpg",
-                        imageDescription: "First Image",
-                      ),
-                    ],
-                  ),
+                  child: CarouselHomePage(),
                 ),
               ),
               Container(
@@ -302,59 +266,6 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              Container(
-                margin: EdgeInsets.only(top: 16.0, left: 16.0),
-                child: Text(
-                  "Top Rated Doctor",
-                  style: MyStyles.headingFour,
-                ),
-              ),
-              // divider
-              Container(
-                margin: EdgeInsets.all(18.0),
-                width: MediaQuery.of(context).size.width,
-                height: 5.0,
-                decoration: BoxDecoration(
-                  color: Colors.green,
-                  borderRadius: BorderRadius.circular(16.0),
-                ),
-              ),
-              // top rated doctor
-              SizedBox(
-                height: 120,
-                child: Container(
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: [
-                      TopRatedDoctor(
-                          imageName: "doctor1.jpg",
-                          doctorName: "Abishek Khanal",
-                          doctorEmail: "abishek@gmail.com",
-                          likes: 30),
-                      TopRatedDoctor(
-                          imageName: "doctor2.jpg",
-                          doctorName: "Abishek Khanal",
-                          doctorEmail: "abishek@gmail.com",
-                          likes: 30),
-                      TopRatedDoctor(
-                          imageName: "doctor3.jpg",
-                          doctorName: "Abishek Khanal",
-                          doctorEmail: "abishek@gmail.com",
-                          likes: 30),
-                      TopRatedDoctor(
-                          imageName: "doctor1.jpg",
-                          doctorName: "Abishek Khanal",
-                          doctorEmail: "abishek@gmail.com",
-                          likes: 30),
-                      TopRatedDoctor(
-                          imageName: "doctor2.jpg",
-                          doctorName: "Abishek Khanal",
-                          doctorEmail: "abishek@gmail.com",
-                          likes: 30),
-                    ],
-                  ),
-                ),
-              )
             ],
           ),
         ),
@@ -362,3 +273,42 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
+
+class CarouselHomePage extends StatelessWidget {
+  const CarouselHomePage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+      stream: FirebaseFirestore.instance
+          .collection('carousel')
+          .snapshots(),
+      builder: (_, snapshot) {
+        if (snapshot.hasError) return Text('Error = ${snapshot.error}');
+        if (snapshot.hasData) {
+          final docs = snapshot.data!.docs;
+          return ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: snapshot.data!.docs.length,
+              itemBuilder: (_, i) {
+                final data = docs[i].data();
+                return Container(
+                  margin: EdgeInsets.all(16.0),
+                  child: Card(
+                    elevation: 2.0,
+                    child: Container(
+                      padding: EdgeInsets.all(8.0),
+                      child: CustomCarousel(imageName: data['imageURL'],),
+                    ),
+                  ),
+                );
+              },
+          );
+        }
+
+        return Center(child: CircularProgressIndicator());
+      },
+    );
+  }
+}
+

@@ -5,8 +5,6 @@ import 'package:medi_tect_admin/screen/doctor_profile_screen.dart';
 import 'package:medi_tect_admin/widgets/custom_appbar.dart';
 import 'package:medi_tect_admin/widgets/custom_drawer.dart';
 
-import 'doctor_profile_screen.dart';
-
 class DoctorScreen extends StatelessWidget {
   const DoctorScreen({Key? key}) : super(key: key);
 

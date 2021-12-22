@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:medi_tect_admin/constants/styles.dart';
@@ -37,14 +38,30 @@ class _AddHomeCarouselScreenState extends State<AddHomeCarouselScreen> {
     final metadata = firebase_storage.SettableMetadata(
         contentType: 'image/jpeg',
         customMetadata: {'picked-file-path': fileName});
-    firebase_storage.UploadTask uploadTask;
-    //late StorageUploadTask uploadTask = firebaseStorageRef.putFile(_imageFile);
-    uploadTask = ref.putFile(io.File(_imageFile!.path), metadata);
-
-    firebase_storage.UploadTask task = await Future.value(uploadTask);
-    Future.value(uploadTask)
-        .then((value) => {print("Upload file path ${value.ref.fullPath}")})
-        .onError((error, stackTrace) =>
+    firebase_storage.UploadTask? uploadTask;
+    uploadTask =
+        ref.putFile(io.File(_imageFile!.path), metadata).whenComplete(() {
+      ref.getDownloadURL().then((value) => {
+            FirebaseFirestore.instance.collection("carousel").doc().set({
+              'imageURL': value,
+            }).then(
+              (value) => AlertDialog(
+                title: Text("Success"),
+                content: Text("Image has been Uploaded"),
+                actions: [
+                  MaterialButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: Text("Close"),
+                  ),
+                ],
+              ),
+            ),
+          });
+    }) as firebase_storage.UploadTask?;
+    var url = ref.getDownloadURL();
+    // firebase_storage.UploadTask task = await Future.value(uploadTask);
+    Future.value(uploadTask).then((value) => print("Working")).onError(
+        (error, stackTrace) =>
             {print("Upload file path error ${error.toString()} ")});
   }
 
@@ -94,7 +111,7 @@ class _AddHomeCarouselScreenState extends State<AddHomeCarouselScreen> {
                 ),
                 borderRadius: BorderRadius.circular(30.0)),
             child: Center(
-              child: ElevatedButton(
+              child: MaterialButton(
                 onPressed: () => uploadImageToFirebase(context),
                 child: Text(
                   "Upload Image",

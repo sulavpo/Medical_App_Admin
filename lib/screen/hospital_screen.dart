@@ -4,11 +4,52 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:medi_tect_admin/screen/book_beds_screen.dart';
 import 'package:medi_tect_admin/screen/edit_bed.dart';
-import 'package:medi_tect_admin/widgets/custom_appbar.dart';
-import 'package:medi_tect_admin/widgets/custom_drawer.dart';
 
-// ignore: must_be_immutable
-class HospitalScreen extends StatelessWidget {
+class BookedBeds extends StatelessWidget {
+  const BookedBeds({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+      stream: FirebaseFirestore.instance.collection('bookBed').snapshots(),
+      builder: (_, snapshot) {
+        if (snapshot.hasError) return Text('Error = ${snapshot.error}');
+
+        if (snapshot.hasData) {
+          final docs = snapshot.data!.docs;
+          return Scaffold(
+            floatingActionButton: FloatingActionButton(
+              onPressed: () => Navigator.pushNamed(context, "/addHospital"),
+              child: Icon(CupertinoIcons.add),
+            ),
+            body: ListView.builder(
+              itemCount: docs.length,
+              itemBuilder: (_, i) {
+                final data = docs[i].data();
+                return Container(
+                  margin: EdgeInsets.all(16.0),
+                  child: Card(
+                    child: ListTile(
+                      leading: Text(data['totalBed'].toString()),
+                      title: Text(data['ward']),
+                      subtitle: Text(data['userId']),
+                    ),
+                  ),
+                );
+              },
+            ),
+          );
+        }
+
+        return Center(child: CircularProgressIndicator());
+      },
+    );
+  }
+}
+
+class ViewAllBeds extends StatelessWidget {
+  const ViewAllBeds({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
@@ -19,10 +60,8 @@ class HospitalScreen extends StatelessWidget {
         if (snapshot.hasData) {
           final docs = snapshot.data!.docs;
           return Scaffold(
-            appBar: myAppBar("Hospital"),
-            drawer: MyDrawer(),
             floatingActionButton: FloatingActionButton(
-              onPressed: ()=> Navigator.pushNamed(context, "/addHospital"),
+              onPressed: () => Navigator.pushNamed(context, "/addHospital"),
               child: Icon(CupertinoIcons.add),
             ),
             body: ListView.builder(
@@ -30,7 +69,13 @@ class HospitalScreen extends StatelessWidget {
               itemBuilder: (_, i) {
                 final data = docs[i].data();
                 return GestureDetector(
-                  onTap: ()=> Navigator.of(context).push(MaterialPageRoute(builder: (context)=> EditBeds(docId: snapshot.data!.docs[i].id, wardName: data['wardName'], totalBeds: data['totalBeds'], contact: data['contact'], availableBeds: data['availableBeds']))),
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => EditBeds(
+                          docId: snapshot.data!.docs[i].id,
+                          wardName: data['wardName'],
+                          totalBeds: data['totalBeds'],
+                          contact: data['contact'],
+                          availableBeds: data['availableBeds']))),
                   child: Container(
                     margin: EdgeInsets.all(16.0),
                     child: Card(
@@ -65,6 +110,33 @@ class HospitalScreen extends StatelessWidget {
 
         return Center(child: CircularProgressIndicator());
       },
+    );
+  }
+}
+
+// ignore: must_be_immutable
+class HospitalScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("Hospital"),
+          bottom: TabBar(
+            tabs: [
+              Tab(text: 'Booked'),
+              Tab(text: 'ViewAll'),
+            ],
+          ),
+        ),
+        body: TabBarView(
+          children: [
+            BookedBeds(),
+            ViewAllBeds(),
+          ],
+        ),
+      ),
     );
   }
 }

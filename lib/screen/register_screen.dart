@@ -33,8 +33,8 @@ class RegisterScreen extends StatelessWidget {
                   "role": "doctor",
                   "specification": "",
                   "description": "",
-                  "likes": "0",
-                  "rating": "0",
+                  "likes": 0.0,
+                  "rating": 0.0,
                   "images": "",
                   "registeredDate": _registerDate,
                   "joinedDate": DateTime.now()
@@ -53,7 +53,6 @@ class RegisterScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: myAppBar("Register"),
-      drawer: MyDrawer(),
       body: ListView(
         children: [
           Center(

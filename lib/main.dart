@@ -22,9 +22,9 @@ import 'package:medi_tect_admin/screen/register_screen.dart';
 import 'package:medi_tect_admin/screen/settings.dart';
 import 'package:medi_tect_admin/screen/vaccine.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 

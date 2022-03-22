@@ -2,9 +2,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     TextEditingController _emailController = TextEditingController();
@@ -57,9 +62,12 @@ class LoginScreen extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.all(16.0),
                     child: TextFormField(
+                      keyboardType: TextInputType.emailAddress,
                       controller: _emailController,
                       decoration: InputDecoration(
                         hintText: "Email",
+                        labelText: "Email",
+                        border: OutlineInputBorder(),
                       ),
                     ),
                   ),
@@ -67,7 +75,11 @@ class LoginScreen extends StatelessWidget {
                     margin: EdgeInsets.all(16.0),
                     child: TextFormField(
                       controller: _passwordController,
-                      decoration: InputDecoration(hintText: "Password"),
+                      decoration: InputDecoration(
+                        hintText: "Password",
+                        labelText: "Password",
+                        border: OutlineInputBorder(),
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -85,43 +97,35 @@ class LoginScreen extends StatelessWidget {
                 ],
               ),
             ),
-            Text("Create account as"),
-            SizedBox(
-              height: 16.0,
-            ),
-            Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  GestureDetector(
-                    onTap: () =>
-                        Navigator.pushNamed(context, "/registerDoctor"),
-                    child: Container(
-                      padding: EdgeInsets.all(16.0),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                      child: Image.asset("assets/icons/doctor.png"),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: () => Navigator.pushNamed(context, "/registerDoctor"),
+                  child: Container(
+                    padding: EdgeInsets.all(16.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20.0),
                     ),
+                    child: Image.asset("assets/icons/doctor.png"),
                   ),
-                  SizedBox(
-                    width: 16.0,
-                  ),
-                  GestureDetector(
-                    onTap: () =>
-                        Navigator.pushNamed(context, "/registerPatient"),
-                    child: Container(
-                      padding: EdgeInsets.all(16.0),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                      child: Image.asset("assets/icons/patient.png"),
+                ),
+                SizedBox(
+                  width: 16.0,
+                ),
+                GestureDetector(
+                  onTap: () => Navigator.pushNamed(context, "/registerPatient"),
+                  child: Container(
+                    padding: EdgeInsets.all(16.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20.0),
                     ),
+                    child: Image.asset("assets/icons/patient.png"),
                   ),
-                ],
-              ),
+                ),
+              ],
             )
           ],
         ),

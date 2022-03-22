@@ -35,9 +35,9 @@ class MyDrawer extends StatelessWidget {
       child: ListView(
         children: [
           UserAccountsDrawerHeader(
-            accountName: Text("Abishek Khanal"),
+            accountName: Text(""),
             accountEmail:
-            Text(FirebaseAuth.instance.currentUser!.email.toString()),
+                Text(FirebaseAuth.instance.currentUser!.email.toString()),
             currentAccountPicture: CircleAvatar(
               backgroundImage: AssetImage("assets/images/doctor1.jpg"),
             ),
@@ -45,7 +45,7 @@ class MyDrawer extends StatelessWidget {
           // home
           drawerItems(
             context,
-                () => Navigator.pushNamed(context, "/home"),
+            () => Navigator.pushNamed(context, "/home"),
             "Home",
             Icon(
               CupertinoIcons.home,
@@ -55,7 +55,7 @@ class MyDrawer extends StatelessWidget {
           // appointment
           drawerItems(
             context,
-                () => Navigator.pushNamed(context, "/appointment"),
+            () => Navigator.pushNamed(context, "/appointment"),
             "Appointment",
             Icon(
               CupertinoIcons.calendar,
@@ -76,7 +76,7 @@ class MyDrawer extends StatelessWidget {
           // dashboard
           drawerItems(
             context,
-                () => Navigator.pushNamed(context, "/dashboard"),
+            () => Navigator.pushNamed(context, "/dashboard"),
             "Dashboard",
             Icon(
               CupertinoIcons.square_grid_4x3_fill,
@@ -89,7 +89,7 @@ class MyDrawer extends StatelessWidget {
           ),
           drawerItems(
             context,
-                () => Navigator.pushNamed(context, "/settings"),
+            () => Navigator.pushNamed(context, "/settings"),
             "Settings",
             Icon(
               CupertinoIcons.settings,
@@ -98,7 +98,7 @@ class MyDrawer extends StatelessWidget {
           ),
           drawerItems(
             context,
-                () => _aboutUs(),
+            () => _aboutUs(),
             "About Us",
             Icon(
               CupertinoIcons.question_circle,
